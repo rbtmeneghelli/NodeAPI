@@ -1,19 +1,16 @@
-import express from 'express';
+import express from "express";
+import tarefaRoutes from "./routes/tarefaRoutes.js";
 
 const app = express();
-/* informa que os dados a serem trabalhados será em formatação JSON */
-app.use(express.json()); 
+const PORT = process.env.PORT || 3000;
 
-app.get('/usuarios', (req, res) => {
-    console.log(req.body);
-    res.status(201).json(req.body);
+// Configuração de Middleware
+app.use(express.json());
+
+// Configuração de rotas
+app.use("/api", tarefaRoutes);
+
+// Iniciando o servidor
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta padrão ${PORT}`);
 });
-
-app.post('/usuarios', (req, res) => {
-    res.status(200).send('Ok, deu bom');
-});
-
-app.listen(3000, () => {
-    console.log('Servidor escutando na porta padrão 3000');
-});
-
