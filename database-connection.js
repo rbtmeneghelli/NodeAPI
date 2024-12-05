@@ -3,8 +3,24 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const getSqlConfiguration = () => {
-  // Configuração de conexão com o banco de dados
+const getSqlWindowsConfiguration = () => {
+  const dbConfig = {
+    driver: 'msnodesqlv8',
+    server: process.env.DB_SERVER,
+    database: process.env.DB_DATABASE,
+    authentication: {
+      type: 'ntlm',
+    },
+    options: {
+      trustedConnection: true,
+      useUTC: true
+    },
+  };
+  return dbConfig;
+};
+
+
+const getSqlAuthConfiguration = () => {
   const dbConfig = {
     user: process.env.DB_USER, // Usuário do banco de dados
     password: process.env.DB_PASSWORD, // Senha do banco de dados
@@ -23,7 +39,7 @@ export const connectToDatabase = async (databaseType) => {
   {
     switch (databaseType) {
       case "SqlServer":
-        await mssql.connect(getSqlConfiguration());
+        await mssql.connect(getSqlWindowsConfiguration());
         console.log("Conexão com o SQL Server bem-sucedida!");
         break;
       default:
@@ -34,9 +50,6 @@ export const connectToDatabase = async (databaseType) => {
   catch (err) 
   {
     console.error(`Erro ao conectar ao banco de dados ${databaseType}:`, err);
-  }
-  finally
-  {
     await mssql.close();
     console.log("Conexão encerrada.");
   }
