@@ -1,4 +1,4 @@
-import { Item } from '../models/itemModel.js';
+import { Item } from "../models/itemModel.js";
 
 export const getAllItems = (req, res) => {
   const items = Item.getAll();
@@ -11,7 +11,7 @@ export const getItemById = (req, res) => {
   if (item) {
     res.json(item);
   } else {
-    res.status(404).json({ message: 'Item não encontrado.' });
+    res.status(404).json({ message: "Item não encontrado." });
   }
 };
 
@@ -26,7 +26,7 @@ export const updateItem = (req, res) => {
   if (updatedItem) {
     res.json(updatedItem);
   } else {
-    res.status(404).json({ message: 'Item não encontrado.' });
+    res.status(404).json({ message: "Item não encontrado." });
   }
 };
 
@@ -36,6 +36,6 @@ export const deleteItem = (req, res) => {
   if (deletedItem) {
     res.json(deletedItem);
   } else {
-    res.status(404).json({ message: 'Item não encontrado.' });
+    res.status(404).json({ message: "Item não encontrado." });
   }
 };
