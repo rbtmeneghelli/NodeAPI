@@ -2,7 +2,7 @@ import express from "express";
 import tarefaRoutes from "./routes/tarefaRoutes.js";
 import itemRoutes from "./routes/itemRoutes.js";
 import authenticationRoutes from "./routes/authenticationRoutes.js";
-import { connectToDatabase } from './database-connection.js';
+import { connectToDatabase } from './databases/database-connection.js';
 import passport from 'passport';
 import dotenv from "dotenv";
 

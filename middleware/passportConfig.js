@@ -1,10 +1,10 @@
-import passport from 'passport';
-import { Strategy, ExtractJwt } from 'passport-jwt';
+import passport from "passport";
+import { Strategy, ExtractJwt } from "passport-jwt";
 import dotenv from "dotenv";
 
 dotenv.config();
 
-const SECRET_KEY = process.env.JWT_SECRET_KEY || 'abc';
+const SECRET_KEY = process.env.JWT_SECRET_KEY;
 
 if (!SECRET_KEY) {
   throw new Error("A chave secreta (JWT_SECRET_KEY) não está definida.");
@@ -22,14 +22,10 @@ passport.use(
       if (user) {
         return done(null, user);
       } else {
-        console.log('cai aqui!!!')
-        const error = new Error("Usuário não autorizado");
-        error.status = 401;
-        error.message = 'dhsgfhsd';
-        return done(null, false, { message: 'Incorrect username.' });
+        return done(null, false);
       }
     }
   )
 );
 
-export const authenticate = passport.authenticate('jwt', { session: false });
+export const authenticate = passport.authenticate("jwt", { session: false });

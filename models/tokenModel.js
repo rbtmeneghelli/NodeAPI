@@ -6,7 +6,6 @@ export class Token {
   }
 
   static verifyToken(token, secretKey) {
-    debugger;
     const decoded = jwtToken.verify(token, secretKey);
     return decoded;
   }
