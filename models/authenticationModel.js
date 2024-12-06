@@ -1,5 +1,9 @@
+import bcrypt from 'bcrypt'
+
 export class Authentication {
   static validateCredentialUser(user, password) {
-    return user === 'admin' && password === 'senha123';
+    const passwordFromDatabase = bcrypt.hashSync('senha123', 10);
+    const passwordCompare = bcrypt.compareSync(password, passwordFromDatabase);
+    return user === 'admin' && passwordCompare;
   }
 }

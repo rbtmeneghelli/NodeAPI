@@ -5,7 +5,9 @@ export class Token {
     return jwtToken.sign(user, secretKey, { expiresIn: '1h' }); 
   }
 
-  static verifyToken(id, secretKey) {
-    return jwtToken.verify(token, secretKey);
+  static verifyToken(token, secretKey) {
+    debugger;
+    const decoded = jwtToken.verify(token, secretKey);
+    return decoded;
   }
 }
