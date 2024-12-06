@@ -45,7 +45,7 @@ export class GenericMongooseRepository {
 
   async deleteById(id) {
     try {
-      return await this.model.findByIdAndDelete(id);
+      return await this.tb.findByIdAndRemove(id);
     } catch (error) {
       throw new Error(`Error deleting by ID: ${error.message}`);
     }

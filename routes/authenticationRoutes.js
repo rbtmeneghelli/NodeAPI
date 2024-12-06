@@ -3,6 +3,7 @@ import {
   login,
   publicAuth,
   protectedAuth,
+  createUser,
 } from "../controllers/authenticationController.js";
 import {
   validateToken,
@@ -20,6 +21,12 @@ router.get(
   validateToken,
   authorizeRoles(["user", "admin"]),
   protectedAuth
+);
+router.post(
+  "/user/create",
+  validateToken,
+  authorizeRoles(["admin"]),
+  createUser
 );
 
 export default router;

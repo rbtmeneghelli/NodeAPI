@@ -1,7 +1,7 @@
 import { GenericMongooseRepository } from "./generic/genericMongooseRepository.js";
 import { tbUser } from "../models/userModel.js";
 
-export class UserRepository extends GenericMongooseRepository {
+export class UserMongooseRepository extends GenericMongooseRepository {
   
   constructor() {
     super(tbUser);

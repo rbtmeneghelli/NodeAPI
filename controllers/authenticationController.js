@@ -3,11 +3,13 @@ import { constantHttpStatusCode } from "../constants/constantHttpStatusCode.js";
 import { constantHttpStatusCodeMessage } from "../constants/constantHttpStatusCodeMessage.js";
 import { Token } from "../models/tokenModel.js";
 import dotenv from "dotenv";
+import { UserService } from "../services/userService.js";
 
 dotenv.config();
+const userService = new UserService();
 const SECRET_KEY = process.env.JWT_SECRET_KEY;
 
-export const login = (req, res) => {
+export const login = async (req, res) => {
   const { username, password } = req.body;
   const userRoles = ["admin"];
 
@@ -23,9 +25,10 @@ export const login = (req, res) => {
       roles: userRoles,
     };
     const tokenCreated = Token.generateToken(payload, SECRET_KEY);
-    return res
-      .status(constantHttpStatusCode.OK)
-      .json({ data: tokenCreated, message: constantHttpStatusCodeMessage.OK });
+    return res.status(constantHttpStatusCode.OK).json({
+      data: tokenCreated,
+      message: constantHttpStatusCodeMessage.OK,
+    });
   }
 
   return res
@@ -33,20 +36,23 @@ export const login = (req, res) => {
     .json({ message: "Credenciais inválidas" });
 };
 
-export const publicAuth = (req, res) => {
+export const publicAuth = async (req, res) => {
   res.status(constantHttpStatusCode.OK).send("Este endpoint é público");
 };
 
-export const protectedAuth = (req, res) => {
+export const protectedAuth = async (req, res) => {
   res.status(constantHttpStatusCode.OK).send(`Este é um endpoint protegido.`);
 };
 
-export const protectedAuthRoles = (req, res) => {
+export const protectedAuthRoles = async (req, res) => {
   res
     .status(constantHttpStatusCode.OK)
     .send(`Este é um endpoint protegido com roles.`);
 };
 
-export const createUser = (req, res) => {
-  
-}
+export const createUser = async (req, res) => {
+  await userService.create(req.body);
+  return res
+    .status(constantHttpStatusCode.CREATED)
+    .json({ data: req.body, message: constantHttpStatusCodeMessage.CREATED });
+};

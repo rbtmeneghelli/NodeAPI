@@ -1,13 +1,13 @@
-import { UserRepository } from "../repository/UserRepository.js";
+import { UserMongooseRepository } from "../repository/userMongooseRepository.js";
 
 export class UserService {
   constructor() {
-    this.UserRepository = new UserRepository();
+    this.UserMongooseRepository = new UserMongooseRepository();
   }
 
   async create(user) {
     try {
-      const newUser = await this.UserRepository.create(user);
+      const newUser = await this.UserMongooseRepository.create(user);
       return newUser;
     } catch (error) {
       throw new Error(`Erro ao criar: ${error.message}`);
@@ -16,7 +16,7 @@ export class UserService {
 
   async findAll() {
     try {
-      const users = await this.UserRepository.find();
+      const users = await this.UserMongooseRepository.find();
       return users;
     } catch (error) {
       throw new Error(`Erro ao buscar: ${error.message}`);
@@ -25,7 +25,7 @@ export class UserService {
 
   async findById(id) {
     try {
-      const user = await this.UserRepository.findById(id);
+      const user = await this.UserMongooseRepository.findById(id);
       if (!user) {
         throw new Error("Registro não encontrado");
       }
@@ -38,7 +38,7 @@ export class UserService {
   // Método para atualizar um filme
   async update(id, userUpdated) {
     try {
-      const userUpdated = await this.UserRepository.updateById(
+      const userUpdated = await this.UserMongooseRepository.updateById(
         id,
         dadosAtualizados
       );
@@ -54,7 +54,7 @@ export class UserService {
   // Método para deletar um filme
   async delete(id) {
     try {
-      const userDeleted = await this.UserRepository.deleteById(id);
+      const userDeleted = await this.UserMongooseRepository.deleteById(id);
       if (!userDeleted) {
         throw new Error("Registro não encontrado para exclusão");
       }
@@ -66,7 +66,7 @@ export class UserService {
 
   async findByIsActive(isActive) {
     try {
-      const users = await this.UserRepository.findByActiveUsers(isActive);
+      const users = await this.UserMongooseRepository.findByActiveUsers(isActive);
       return users;
     } catch (error) {
       throw new Error(`Erro ao buscar: ${error.message}`);
