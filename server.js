@@ -47,6 +47,20 @@ const options = {
       description: 'Uma descrição da minha API'
     },
   },
+  components: {
+    securitySchemes: {
+      bearerAuth: {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT', // Opcional, pode ser JWT ou outro formato
+      },
+    },
+  },
+  security: [
+    {
+      bearerAuth: [], // Aplicação do esquema globalmente
+    },
+  ],
   apis: ['./routes/*.js'], // Arquivos que contêm os endpoints da API
 };
 

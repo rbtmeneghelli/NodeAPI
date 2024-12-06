@@ -9,14 +9,6 @@ import {
 
 const router = express.Router();
 
-// OK: "A ação solicitada foi efetuada com sucesso",
-// CREATED: "O registro foi criado com sucesso",
-// BAD_REQUEST: "Os parametros de requisição oferecidos estão invalidos para serem processados",
-// UNAUTHORIZED: "Acesso não permitido! O seu token de acesso está invalido ou expirado. Solicite um novo",
-// FORBIDDEN: "Acesso negado! você não tem permissão suficiente para solicitar essa ação",
-// NOT_FOUND: "O registro solicitado não foi encontrado",
-// INTERNAL_ERROR: "Ocorreu um erro interno durante o processamento da requisição",
-
 /**
  * @swagger
  * tags:
@@ -26,7 +18,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /items:
+ * /api/items:
  *   get:
  *     tags:
  *       - "Items"
@@ -44,7 +36,7 @@ router.get("/items", getAllItems);
 
 /**
  * @swagger
- * /items/{id}:
+ * /api/items/{id}:
  *   get:
  *     tags:
  *       - "Items"
@@ -62,6 +54,8 @@ router.get("/items", getAllItems);
  *         description: "A ação solicitada foi efetuada com sucesso"
  *       400:
  *         description: "Os parametros de requisição oferecidos estão invalidos para serem processados"
+ *       404:
+ *         description: "O registro solicitado não foi encontrado"
  *       500:
  *         description: "Ocorreu um erro interno durante o processamento da requisição"
  */
@@ -69,7 +63,7 @@ router.get("/items/:id", getItemById);
 
 /**
  * @swagger
- * /items:
+ * /api/items:
  *   post:
  *     tags:
  *       - "Items"
@@ -93,7 +87,7 @@ router.post("/items", createItem);
 
 /**
  * @swagger
- * /items/{id}:
+ * /api/items/{id}:
  *   put:
  *     tags:
  *       - "Items"
@@ -117,6 +111,8 @@ router.post("/items", createItem);
  *         description: "A ação solicitada foi efetuada com sucesso"
  *       400:
  *         description: "Os parametros de requisição oferecidos estão invalidos para serem processados"
+ *       404:
+ *         description: "O registro solicitado não foi encontrado"
  *       500:
  *         description: "Ocorreu um erro interno durante o processamento da requisição"
  */
@@ -124,7 +120,7 @@ router.put("/items/:id", updateItem);
 
 /**
  * @swagger
- * /items/{id}:
+ * /api/items/{id}:
  *   delete:
  *     tags:
  *       - "Items"
@@ -142,6 +138,8 @@ router.put("/items/:id", updateItem);
  *         description: "A ação solicitada foi efetuada com sucesso"
  *       400:
  *         description: "Os parametros de requisição oferecidos estão invalidos para serem processados"
+ *       404:
+ *         description: "O registro solicitado não foi encontrado"
  *       500:
  *         description: "Ocorreu um erro interno durante o processamento da requisição"
  */
@@ -155,18 +153,15 @@ router.delete("/items/:id", deleteItem);
  *       type: object
  *       required:
  *         - nome
- *         - email
+ *         - valor
  *       properties:
- *         id:
- *           type: integer
  *         nome:
  *           type: string
- *         email:
- *           type: string
+ *         valor:
+ *           type: number
  *       example:
- *         id: 1
- *         nome: "João Silva"
- *         email: "joao@exemplo.com"
+ *         nome: "Notebook"
+ *         valor: "10000.00"
  */
 
 export default router;

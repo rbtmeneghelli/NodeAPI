@@ -12,10 +12,75 @@ import {
 
 const router = express.Router();
 
+/**
+ * @swagger
+ * tags:
+ *   - name: "Autenticação"
+ *     description: "Operações relacionadas as Autenticação"
+ */
+
+/**
+ * @swagger
+ * /api/authentication/login:
+ *   post:
+ *     tags:
+ *       - "Autenticação"
+ *     summary: "Autenticação do usuário"
+ *     description: "Retorna um token de autenticação para acesso a funcionalidades restritas"
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Autenticacao'
+ *     responses:
+ *       200:
+ *         description: "A ação solicitada foi efetuada com sucesso"
+ *       400:
+ *         description: "Os parametros de requisição oferecidos estão invalidos para serem processados"
+ *       500:
+ *         description: "Ocorreu um erro interno durante o processamento da requisição"
+ */
 router.post("/authentication/login", login);
+
+/**
+ * @swagger
+ * /api/authentication/public:
+ *   get:
+ *     tags:
+ *       - "Autenticação"
+ *     summary: "Endpoint de acesso publico"
+ *     description: "Retorna uma mensagem simples apenas"
+ *     responses:
+ *       200:
+ *         description: "A ação solicitada foi efetuada com sucesso"
+ *       400:
+ *         description: "Os parametros de requisição oferecidos estão invalidos para serem processados"
+ *       500:
+ *         description: "Ocorreu um erro interno durante o processamento da requisição"
+ */
 router.get("/authentication/public", publicAuth);
-//router.get('/authentication/protected', authenticate, protectedAuth);
+
+/**
+ * @swagger
+ * /api/authentication/protected:
+ *   get:
+ *     tags:
+ *       - "Autenticação"
+ *     summary: "Endpoint de acesso restrito a usuários autenticados"
+ *     description: "Retorna uma mensagem simples apenas"
+ *     security:
+ *       - bearerAuth: []  # Especifica que essa rota requer autenticação
+ *     responses:
+ *       200:
+ *         description: "A ação solicitada foi efetuada com sucesso"
+ *       400:
+ *         description: "Os parametros de requisição oferecidos estão invalidos para serem processados"
+ *       500:
+ *         description: "Ocorreu um erro interno durante o processamento da requisição"
+ */
 router.get("/authentication/protected", validateToken, protectedAuth);
+
 router.get(
   "/authentication/protectedRole",
   validateToken,
@@ -23,10 +88,31 @@ router.get(
   protectedAuth
 );
 router.post(
-  "/user/create",
+  "/authentication/create",
   validateToken,
   authorizeRoles(["admin"]),
   createUser
 );
+
+//router.get('/authentication/protected', authenticate, protectedAuth);
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Autenticacao:
+ *       type: object
+ *       required:
+ *         - username
+ *         - password
+ *       properties:
+ *         username:
+ *           type: string
+ *         password:
+ *           type: string
+ *       example:
+ *         username: "admin"
+ *         password: "senha123"
+ */
 
 export default router;

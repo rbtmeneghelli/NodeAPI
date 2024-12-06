@@ -6,7 +6,8 @@ export class Item {
   }
 
   static getById(id) {
-    return items.find((item) => item.id === id);
+    const index = items.findIndex((item) => item.id === id);
+    return index !== -1 ? items[index] : null;
   }
 
   static create(data) {
