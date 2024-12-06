@@ -8,8 +8,8 @@ import passport from "passport";
 import dotenv from "dotenv";
 import { constantHttpStatusCode } from "./constants/constantHttpStatusCode.js";
 import { constantHttpStatusCodeMessage } from "./constants/constantHttpStatusCodeMessage.js";
-import swaggerJSDoc from 'swagger-jsdoc';
-import swaggerUi from 'swagger-ui-express';
+import swaggerJSDoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
 
 dotenv.config();
 
@@ -36,7 +36,6 @@ app.use((err, req, res, next) => {
   }
 });
 
-
 // Definindo as opções do Swagger
 const options = {
   definition: {
@@ -44,25 +43,29 @@ const options = {
     info: {
       title: 'Minha API',
       version: '1.0.0',
-      description: 'Uma descrição da minha API'
+      description: 'Uma descrição da minha API',
     },
-  },
-  components: {
-    securitySchemes: {
-      bearerAuth: {
-        type: 'http',
-        scheme: 'bearer',
-        bearerFormat: 'JWT', // Opcional, pode ser JWT ou outro formato
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          in: 'header', // Essa linha pode ser omitida, pois 'header' é o padrão
+          name: 'Authorization', // Essa linha não é suportada no esquema diretamente
+          description: 'Insira aqui o token gerado após sua autenticação para acesso aos endpoints restritos',
+          bearerFormat: 'JWT',
+        },
       },
     },
+    security: [
+      {
+        bearerAuth: [], // Aplica o esquema globalmente
+      },
+    ],
   },
-  security: [
-    {
-      bearerAuth: [], // Aplicação do esquema globalmente
-    },
-  ],
-  apis: ['./routes/*.js'], // Arquivos que contêm os endpoints da API
+  apis: ['./routes/*.js'], // Aponta para os arquivos com as anotações
 };
+
 
 const swaggerSpec = swaggerJSDoc(options);
 
