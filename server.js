@@ -8,6 +8,8 @@ import passport from "passport";
 import dotenv from "dotenv";
 import { constantHttpStatusCode } from "./constants/constantHttpStatusCode.js";
 import { constantHttpStatusCodeMessage } from "./constants/constantHttpStatusCodeMessage.js";
+import swaggerJSDoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
 
 dotenv.config();
 
@@ -33,6 +35,25 @@ app.use((err, req, res, next) => {
     next();
   }
 });
+
+
+// Definindo as opções do Swagger
+const options = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Minha API',
+      version: '1.0.0',
+      description: 'Uma descrição da minha API'
+    },
+  },
+  apis: ['./routes/*.js'], // Arquivos que contêm os endpoints da API
+};
+
+const swaggerSpec = swaggerJSDoc(options);
+
+// Rota para exibir a documentação
+app.use(`${PATH_API}/docs`, swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Configuração de rotas
 app.use(PATH_API, tarefaRoutes);
