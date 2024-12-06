@@ -46,3 +46,7 @@ export const protectedAuthRoles = (req, res) => {
     .status(constantHttpStatusCode.OK)
     .send(`Este é um endpoint protegido com roles.`);
 };
+
+export const createUser = (req, res) => {
+  
+}

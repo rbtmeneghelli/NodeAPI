@@ -17,4 +17,4 @@ Incluir manualmente a opção type: "module"
 
 - Bibliotecas extras a serem utilizadas:
 Prisma 
-Mongoose
+Mongoose (ORM)
