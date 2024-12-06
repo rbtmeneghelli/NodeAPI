@@ -1,8 +1,10 @@
 import { UserMongooseRepository } from "../repository/userMongooseRepository.js";
+import { UserPrismaRepository } from "../repository/userPrismaRepository.js";
 
 export class UserService {
   constructor() {
     this.UserMongooseRepository = new UserMongooseRepository();
+    this.UserPrismaRepository = new UserPrismaRepository();
   }
 
   async create(user) {
@@ -66,7 +68,9 @@ export class UserService {
 
   async findByIsActive(isActive) {
     try {
-      const users = await this.UserMongooseRepository.findByActiveUsers(isActive);
+      const users = await this.UserMongooseRepository.findByActiveUsers(
+        isActive
+      );
       return users;
     } catch (error) {
       throw new Error(`Erro ao buscar: ${error.message}`);
