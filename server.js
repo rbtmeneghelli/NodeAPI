@@ -3,13 +3,13 @@ import tarefaRoutes from "./routes/tarefaRoutes.js";
 import itemRoutes from "./routes/itemRoutes.js";
 import authenticationRoutes from "./routes/authenticationRoutes.js";
 import fileRoutes from "./routes/fileRoutes.js";
-import { connectToDatabase } from "./databases/database-connection.js";
 import passport from "passport";
 import dotenv from "dotenv";
 import { constantHttpStatusCode } from "./constants/constantHttpStatusCode.js";
 import { constantHttpStatusCodeMessage } from "./constants/constantHttpStatusCodeMessage.js";
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
+import cors from "cors";
 
 dotenv.config();
 
@@ -77,6 +77,15 @@ app.use(PATH_API, tarefaRoutes);
 app.use(PATH_API, itemRoutes);
 app.use(PATH_API, authenticationRoutes);
 app.use(PATH_API, fileRoutes);
+
+// Configuração do CORS para permitir acesso de sites especificos
+const corsOptions = {
+  origin: 'https://www.testelocal.com',
+  methods: 'GET,PUT,POST,DELETE'
+};
+
+// Aplicando as configurações CORS
+app.use(cors,(corsOptions))
 
 // Iniciando o servidor
 app.listen(PORT, async () => {
